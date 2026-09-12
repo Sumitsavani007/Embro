@@ -65,9 +65,8 @@ export const OperatorsScreen: React.FC = () => {
             className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg font-semibold text-slate-700 cursor-pointer"
           >
             <option value="ALL">All Shifts</option>
-            <option value="Shift 1">Shift 1</option>
-            <option value="Shift 2">Shift 2</option>
-            <option value="Shift 3">Shift 3</option>
+            <option value="Shift 1">Day Shift</option>
+            <option value="Shift 2">Night Shift</option>
           </select>
         </div>
       </div>

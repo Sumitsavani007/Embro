@@ -245,6 +245,14 @@ export const OmniSearchModal: React.FC = () => {
               </div>
             </div>
           )}
+
+          {q && matchedScreens.length === 0 && matchedMachines.length === 0 && matchedOrders.length === 0 && matchedOperators.length === 0 && (
+            <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 p-8 text-center">
+              <Search className="mx-auto mb-2 h-6 w-6 text-slate-300" />
+              <p className="text-sm font-semibold text-slate-700">No results found</p>
+              <p className="mt-1 text-xs text-slate-400">Try a machine number, order, operator or module name.</p>
+            </div>
+          )}
         </div>
 
         {/* Footer */}

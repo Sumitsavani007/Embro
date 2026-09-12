@@ -23,6 +23,7 @@
   .app-main table button { min-height: 2rem; }
   .app-main .rounded-xl, .app-main .rounded-2xl { border-radius: .75rem; }
   .icon-button { @apply flex size-11 shrink-0 items-center justify-center rounded-xl text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-colors; }
+  .search-trigger { @apply border border-slate-200 bg-slate-50/70 shadow-xs hover:border-blue-300 hover:bg-white hover:shadow-sm; }
   .header-select { @apply flex items-center gap-2 min-w-0 rounded-lg border border-slate-200 bg-white px-2.5; }
   .header-select select { @apply min-h-9 w-full min-w-0 bg-transparent text-xs font-medium text-slate-700 outline-offset-0; }
   .profile-action { @apply flex w-full min-h-11 items-center gap-2.5 rounded-lg px-3 py-2 text-left hover:bg-slate-50; }

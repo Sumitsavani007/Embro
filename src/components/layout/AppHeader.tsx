@@ -187,8 +187,8 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ onMobileMenuToggle }) => {
           <p className="hidden md:block text-xs text-slate-500 mt-1 truncate">{subtitle}</p>
         </div>
         <div className="flex items-center gap-1 sm:gap-2 shrink-0">
-          <button onClick={() => setIsOmniSearchOpen(true)} className="icon-button xl:w-auto xl:px-3 xl:gap-3" aria-label="Search">
-            <Search className="size-5" /><span className="hidden xl:inline text-sm text-slate-500">{language === 'gu' ? 'શોધો' : 'Search'}</span><kbd className="hidden xl:inline rounded border border-slate-200 px-1 text-[10px] text-slate-400">⌘K</kbd>
+          <button onClick={() => setIsOmniSearchOpen(true)} className="search-trigger icon-button xl:w-72 xl:justify-start xl:px-3 xl:gap-3" aria-label="Search workspace">
+            <Search className="size-5" /><span className="hidden xl:inline flex-1 text-left text-sm text-slate-500">{language === 'gu' ? 'મશીન, ઓર્ડર શોધો...' : 'Search machines, orders...'}</span><kbd className="hidden xl:inline rounded-md border border-slate-200 bg-white px-1.5 py-0.5 text-[10px] text-slate-400">⌘K</kbd>
           </button>
           <button onClick={() => { setIsAlertDrawerOpen(true); setProfileOpen(false); }} className="icon-button relative" aria-label="View alerts">
             <Bell className="size-5" />{unreadAlertCount > 0 && <span className="absolute right-1 top-1 min-w-4 h-4 px-1 rounded-full bg-rose-600 text-white text-[9px] flex items-center justify-center ring-2 ring-white">{unreadAlertCount > 99 ? '99+' : unreadAlertCount}</span>}

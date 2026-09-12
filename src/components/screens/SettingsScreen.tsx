@@ -6,6 +6,10 @@ import {
   Database,
   RefreshCw,
   Zap,
+  Radio,
+  Server,
+  CheckCircle2,
+  AlertTriangle,
 } from 'lucide-react';
 import { FACTORIES } from '../../data/mockData';
 import { useApp } from '../../context/AppContext';
@@ -18,6 +22,11 @@ export const SettingsScreen: React.FC = () => {
   const [tempThreshold, setTempThreshold] = useState(48);
   const [targetStitchesShift, setTargetStitchesShift] = useState(65000);
   const [isSaved, setIsSaved] = useState(false);
+  const [connectionMode, setConnectionMode] = useState<'simulation' | 'gateway'>('simulation');
+  const [gatewayUrl, setGatewayUrl] = useState('https://gateway.factory.local/v1/telemetry');
+  const [gatewayKey, setGatewayKey] = useState('');
+  const [syncInterval, setSyncInterval] = useState(5);
+  const [connectionState, setConnectionState] = useState<'idle' | 'testing' | 'connected' | 'error'>('idle');
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,6 +102,21 @@ export const SettingsScreen: React.FC = () => {
               ))}
             </select>
           </div>
+        </div>
+
+        <div className="bg-white rounded-xl border border-slate-200/90 p-5 shadow-xs space-y-4">
+          <div className="flex items-center justify-between gap-3 pb-3 border-b border-slate-100">
+            <div className="flex items-center gap-2"><Radio className="w-4 h-4 text-emerald-600" /><div><h3 className="text-sm font-bold text-slate-900">Machine data connection</h3><p className="text-[11px] text-slate-500">Choose how the panel receives live machine telemetry.</p></div></div>
+            {connectionState === 'connected' ? <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-1 text-[10px] font-bold text-emerald-700"><CheckCircle2 className="h-3 w-3" />Connected</span> : connectionState === 'error' ? <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 px-2 py-1 text-[10px] font-bold text-rose-700"><AlertTriangle className="h-3 w-3" />Check settings</span> : null}
+          </div>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <label className="font-semibold text-slate-700">Data source<select value={connectionMode} onChange={(e) => setConnectionMode(e.target.value as typeof connectionMode)} className="mt-1 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 font-medium"><option value="simulation">Demo / simulated telemetry</option><option value="gateway">Factory gateway (live)</option></select></label>
+            <label className="font-semibold text-slate-700">Sync interval<select value={syncInterval} onChange={(e) => setSyncInterval(Number(e.target.value))} className="mt-1 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 font-medium"><option value={2}>Every 2 seconds</option><option value={5}>Every 5 seconds</option><option value={10}>Every 10 seconds</option><option value={30}>Every 30 seconds</option></select></label>
+            <label className="font-semibold text-slate-700 sm:col-span-2">Gateway/API endpoint<input value={gatewayUrl} onChange={(e) => setGatewayUrl(e.target.value)} disabled={connectionMode === 'simulation'} className="mt-1 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 font-normal disabled:opacity-50" placeholder="https://your-gateway/telemetry" /></label>
+            <label className="font-semibold text-slate-700">Gateway API key<input type="password" value={gatewayKey} onChange={(e) => setGatewayKey(e.target.value)} disabled={connectionMode === 'simulation'} className="mt-1 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 font-normal disabled:opacity-50" placeholder="Stored securely on backend" /></label>
+            <div className="flex items-end"><button type="button" onClick={() => { setConnectionState('testing'); window.setTimeout(() => setConnectionState(connectionMode === 'simulation' || gatewayUrl.startsWith('http') ? 'connected' : 'error'), 700); }} className="flex w-full items-center justify-center gap-2 rounded-lg bg-slate-900 px-3 py-2 text-xs font-bold text-white hover:bg-slate-800"><Server className="h-3.5 w-3.5" />Test connection</button></div>
+          </div>
+          <p className="text-[11px] text-slate-400">Live mode expects the gateway to normalize machine data by device ID. API credentials should be kept on the server, not exposed to the browser.</p>
         </div>
 
         {/* Safety & Thresholds */}

@@ -745,13 +745,26 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             const addedStitches = Math.floor((m.speed / 60) * 2.5);
             const speedFlutter = Math.floor(Math.random() * 7) - 3;
             const newSpeed = Math.max(450, Math.min(920, m.speed + speedFlutter));
+            const nextRuntimeMinutes = m.runtimeMinutes + 1;
             return {
               ...m,
               stitchCount: m.stitchCount + addedStitches,
               speed: newSpeed,
+              runtimeHours: m.runtimeHours + (nextRuntimeMinutes >= 60 ? 1 : 0),
+              runtimeMinutes: nextRuntimeMinutes >= 60 ? 0 : nextRuntimeMinutes,
+              lastUpdated: 'Just now',
             };
           }
-          return m;
+          if (m.status === 'STOPPED' || m.status === 'IDLE') {
+            const nextStopMinutes = m.stopTimeMinutes + 1;
+            return {
+              ...m,
+              stopTimeHours: m.stopTimeHours + (nextStopMinutes >= 60 ? 1 : 0),
+              stopTimeMinutes: nextStopMinutes >= 60 ? 0 : nextStopMinutes,
+              lastUpdated: 'Just now',
+            };
+          }
+          return { ...m, lastUpdated: 'Just now' };
         })
       );
     }, 2500);

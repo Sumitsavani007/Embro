@@ -16,6 +16,7 @@ export const LiveStatusScreen: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('ALL');
   const [groupFilter, setGroupFilter] = useState<string>('ALL');
+  const [sortBy, setSortBy] = useState<'machineNumber' | 'status' | 'speed' | 'efficiency' | 'stitchCount'>('machineNumber');
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showAddMachine, setShowAddMachine] = useState(false);
   const [newMachine, setNewMachine] = useState({ number: '', name: '', model: '', deviceId: '', endpoint: '' });
@@ -37,6 +38,10 @@ export const LiveStatusScreen: React.FC = () => {
     const matchesStatus = statusFilter === 'ALL' || m.status === statusFilter;
     const matchesGroup = groupFilter === 'ALL' || m.group === groupFilter;
     return matchesSearch && matchesStatus && matchesGroup;
+  }).sort((a, b) => {
+    if (sortBy === 'machineNumber') return a.machineNumber.localeCompare(b.machineNumber, undefined, { numeric: true });
+    if (sortBy === 'status') return a.status.localeCompare(b.status);
+    return Number(b[sortBy]) - Number(a[sortBy]);
   });
 
   const handleCardClick = (id: string) => {
@@ -85,6 +90,14 @@ export const LiveStatusScreen: React.FC = () => {
             <option value="IDLE">Idle Only</option>
             <option value="STOPPED">Stopped Only</option>
             <option value="OFFLINE">Offline Only</option>
+          </select>
+
+          <select value={sortBy} onChange={(e) => setSortBy(e.target.value as typeof sortBy)} className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg font-semibold text-slate-700 focus:outline-hidden focus:ring-2 focus:ring-blue-500 cursor-pointer" aria-label="Sort machines">
+            <option value="machineNumber">Sort: Machine</option>
+            <option value="status">Sort: Status</option>
+            <option value="speed">Sort: Speed</option>
+            <option value="efficiency">Sort: Efficiency</option>
+            <option value="stitchCount">Sort: Production</option>
           </select>
 
           {/* Group Filter */}

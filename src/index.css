@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@layer base {
+  html { font-family: Inter, ui-sans-serif, system-ui, sans-serif; -webkit-text-size-adjust: 100%; }
+  body { margin: 0; min-width: 320px; }
+  button, select, summary { cursor: pointer; }
+  button, input, select, textarea, summary, [role="button"] { -webkit-tap-highlight-color: transparent; }
+  :focus-visible { outline: 2px solid #2563eb; outline-offset: 3px; }
+  * { scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+}
+@layer components {
+  .saas-sidebar { background: radial-gradient(circle at 10% 0%, rgba(37, 99, 235, .16), transparent 28%), linear-gradient(180deg, #070d1c 0%, #030712 100%); }
+  .saas-sidebar-group { transition: background-color .18s ease; }
+  .saas-sidebar-items { overflow: visible; }
+  .saas-sidebar-item .saas-sidebar-label { position: relative; z-index: 1; opacity: 1; visibility: visible; white-space: nowrap; }
+  .saas-sidebar-item { position: relative; overflow: hidden; }
+  .saas-sidebar-item::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(255,255,255,.08), transparent 55%); opacity: 0; transition: opacity .2s ease; }
+  .saas-sidebar-item:hover::after { opacity: 1; }
+  /* Shared interaction language: large enough to tap, quiet enough to scan. */
+  .app-main button:not(.icon-button), .app-main select, .app-main input, .app-main textarea { min-height: 2.5rem; }
+  .app-main label { line-height: 1.35; }
+  .app-main table button { min-height: 2rem; }
+  .app-main .rounded-xl, .app-main .rounded-2xl { border-radius: .75rem; }
+  .icon-button { @apply flex size-11 shrink-0 items-center justify-center rounded-xl text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-colors; }
+  .header-select { @apply flex items-center gap-2 min-w-0 rounded-lg border border-slate-200 bg-white px-2.5; }
+  .header-select select { @apply min-h-9 w-full min-w-0 bg-transparent text-xs font-medium text-slate-700 outline-offset-0; }
+  .profile-action { @apply flex w-full min-h-11 items-center gap-2.5 rounded-lg px-3 py-2 text-left hover:bg-slate-50; }
+  .profile-panel { max-height: calc(100dvh - 88px); overflow-y: auto; overscroll-behavior: contain; }
+  .app-main { overscroll-behavior-y: contain; }
+  .app-main .grid > * { min-width: 0; }
+  .app-main .overflow-x-auto { max-width: 100%; overscroll-behavior-x: contain; }
+  .mobile-bottom-nav { padding-bottom: max(.5rem, env(safe-area-inset-bottom)); }
+  @media (max-width: 639px) {
+    .app-main input, .app-main select, .app-main textarea { font-size: 16px; max-width: 100%; }
+  }
+}

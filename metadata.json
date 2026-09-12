@@ -1,0 +1,6 @@
+{
+  "name": "Embroidery Track",
+  "description": "Real-time Machine Tracking & Production Monitoring for textile and embroidery factories",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
